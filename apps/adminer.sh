@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# T&M Hansson IT AB © - 2023, https://www.hanssonit.se/
+# T&M Hansson IT AB © - 2024, https://www.hanssonit.se/
 
 true
 SCRIPT_NAME="Adminer"
@@ -28,6 +28,7 @@ else
     # Removal
     check_external_ip # Check that the script can see the external IP (apache fails otherwise)
     a2disconf adminer.conf
+    restart_webserver
     rm -f $ADMINER_CONF
     rm -rf $ADMINERDIR
     check_command apt-get purge adminer -y

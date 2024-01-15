@@ -106,7 +106,7 @@ Please report any issues you can find. Improvements are welcome!
 * You? :)
 
 ## Special thanks to
-* [Ezra Holm](https://github.com/ezraholm50) @ [Tech and Me](https://www.techandme.se)
+* Ezra Holm @ [Tech and Me](https://www.techandme.se)
 * [Luis Guzman](https://github.com/Ark74) @ [SwITNet](https://switnet.net)
 * [Stefan Heitmüller](https://github.com/morph027) @ [morph027's Blog](https://morph027.gitlab.io/)
 * [Lorenzo Faleschini](https://github.com/penzoiders)
@@ -114,9 +114,9 @@ Please report any issues you can find. Improvements are welcome!
 * [liao20081228](https://github.com/liao20081228)
 * [aaaskew](https://github.com/aaaskew)
 
-[Nextcloud Server]: https://bit.ly/2CHIUkA
-[app store]: https://bit.ly/2HUy4v9
-[\*nix]: https://bit.ly/2UaCC7b
-[A+ security-rated]: https://bit.ly/2mvlyJ3
-[Collabora Online]: https://bit.ly/2WjVVZ8
-[ONLYOFFICE]: https://bit.ly/2FA0TKj
+[Nextcloud Server]: http://shortio.hanssonit.se/r1Rx0GqXa9
+[app store]: http://shortio.hanssonit.se/Rz1GEXt9dL
+[\*nix]: http://shortio.hanssonit.se/52hOTQbhdh
+[A+ security-rated]: http://shortio.hanssonit.se/aMTjg0SJi3
+[Collabora Online]: http://shortio.hanssonit.se/IKjBoOfQOT
+[ONLYOFFICE]: http://shortio.hanssonit.se/oRLShCfRK3

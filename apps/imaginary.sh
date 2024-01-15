@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# T&M Hansson IT AB © - 2023, https://www.hanssonit.se/
+# T&M Hansson IT AB © - 2024, https://www.hanssonit.se/
 # GNU General Public License v3.0
 # https://github.com/nextcloud/vm/blob/master/LICENSE
 
@@ -21,8 +21,15 @@ debug_mode
 root_check
 
 # Check recources
-ram_check 4
-cpu_check 2
+# If we can calculate the cpu and ram, then set it to the lowest possible, if not, then hardcode it to a recomended minimum.
+if which nproc >/dev/null 2>&1
+then
+    ram_check 2 Imaginary
+    cpu_check 2 Imaginary
+else
+    ram_check 4 Imaginary
+    cpu_check 2 Imaginary
+fi
 
 # Compatible with NC24 and above
 lowest_compatible_nc 26
@@ -39,7 +46,7 @@ else
     if yesno_box_yes "Do you want to remove the Imaginary and all it's settings?"
     then
         # Remove docker container
-        docker_prune_this 'nextcloud/aio-imaginary'
+        docker_prune_this 'nextcloud/aio-imaginary' 'imaginary'
         # reset the preview formats
         nextcloud_occ config:system:delete "preview_imaginary_url"
         nextcloud_occ config:system:delete "enabledPreviewProviders"
@@ -90,8 +97,10 @@ This will most likely clear a lot of space! Also, pre-generated previews are not
             rm -rfv "$NCDATA"/appdata_*/preview/*
             print_text_in_color "$ICyan" "Scanning Nextclouds appdata directory after removing all previews. \
 This can take a while..."
+            # Don't execute the update before all cronjobs are finished
+            check_running_cronjobs
             nextcloud_occ files:scan-app-data preview -vvv
-            msg_box "All previews were successfully removed."
+            print_text_in_color "$IGreen" "All previews were successfully removed."
         fi
         # Remove log
         rm -f "$VMLOGS"/previewgenerator.log
@@ -102,7 +111,7 @@ install_docker
 
 # Pull and start
 docker pull nextcloud/aio-imaginary:latest
-docker run -t -d -p 127.0.0.1:9000:9000 --restart always --name imaginary nextcloud/aio-imaginary –cap-add=sys_nice -concurrency 50 -enable-url-source -log-level debug
+docker run -t -d -p 127.0.0.1:9000:9000 --restart always --name imaginary nextcloud/aio-imaginary –cap-add=sys_nice -concurrency 50 -enable-url-source -return-size -log-level debug
 
 # Test if imaginary is working
 countdown "Testing if it works in 3 sedonds" "3"

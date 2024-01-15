@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# T&M Hansson IT AB © - 2023, https://www.hanssonit.se/
+# T&M Hansson IT AB © - 2024, https://www.hanssonit.se/
 # GNU General Public License v3.0
 # https://github.com/nextcloud/vm/blob/master/LICENSE
 
@@ -482,13 +482,16 @@ else
 fi
 
 # Set correct amount of CPUs for Imaginary
-if which nproc >/dev/null 2>&1
+if does_this_docker_exist nextcloud/aio-imaginary
 then
-    nextcloud_occ config:system:set preview_concurrency_new --value="$(nproc)"
-    nextcloud_occ config:system:set preview_concurrency_all --value="$(($(nproc)*2))"
-else
-    nextcloud_occ config:system:set preview_concurrency_new --value="2"
-    nextcloud_occ config:system:set preview_concurrency_all --value="4"
+    if which nproc >/dev/null 2>&1
+    then
+        nextcloud_occ config:system:set preview_concurrency_new --value="$(nproc)"
+        nextcloud_occ config:system:set preview_concurrency_all --value="$(($(nproc)*2))"
+    else
+        nextcloud_occ config:system:set preview_concurrency_new --value="2"
+        nextcloud_occ config:system:set preview_concurrency_all --value="4"
+    fi
 fi
 
 # Add temporary fix if needed
@@ -562,7 +565,7 @@ bash $SCRIPTS/update.sh minor
 
 # Check if new major is out, and inform on how to update
 nc_update
-if version_gt "$NCVERSION" "$CURRENTVERSION"
+if version_gt "$NCMAJOR" "$CURRENTMAJOR"
 then
     msg_box "We noticed that there's a new major release of Nextcloud ($NCVERSION).\nIf you want to update to the latest release instantly, please check this:\n
 https://docs.hanssonit.se/s/W6fMouPiqQz3_Mog/virtual-machines-vm/d/W7Du9uPiqQz3_Mr1/nextcloud-vm-machine-configuration?currentPageId=W7D3quPiqQz3_MsE"
@@ -589,7 +592,7 @@ More info here: https://nextcloud.com/enterprise/
 Get your license here: https://shop.hanssonit.se/product/nextcloud-enterprise-license-100-users/"
 
 msg_box "TIPS & TRICKS:
-1. Publish your server online: https://goo.gl/iUGE2U
+1. Publish your server online: http://shortio.hanssonit.se/ffOQOXS6Kh
 2. To login to PostgreSQL just type: sudo -u postgres psql nextcloud_db
 3. To update this server just type: sudo bash /var/scripts/update.sh
 4. Install apps, configure Nextcloud, and server: sudo bash $SCRIPTS/menu.sh"
